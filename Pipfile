@@ -9,6 +9,9 @@ numpy = "*"
 matplotlib = "*"
 seaborn = "*"
 openpyxl = "*"
+plotly = "*"
+plotly-express = "*"
+nbformat = "*"
 
 [dev-packages]
 ipykernel = "*"
