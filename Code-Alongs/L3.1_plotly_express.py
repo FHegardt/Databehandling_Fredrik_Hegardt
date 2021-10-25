@@ -4,7 +4,7 @@ import plotly_express as px
 gapminder = px.data.gapminder()
 
 nordic = gapminder[gapminder["country"].isin(["Sweden", "Denmark", "Norway", "Iceland", "Finland"])]
-test = gapminder[gapminder["continent"].isin(["Europe"])]
+test = gapminder[gapminder["continent"].isin(["Africa"])]
 
 fig = px.scatter(test, x = "gdpPercap", y = "lifeExp", 
     size = "pop", color = "country", size_max = 70,
