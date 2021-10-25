@@ -12,6 +12,7 @@ openpyxl = "*"
 plotly = "*"
 plotly-express = "*"
 nbformat = "*"
+lxml = "*"
 
 [dev-packages]
 ipykernel = "*"
