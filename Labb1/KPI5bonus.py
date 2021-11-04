@@ -6,6 +6,8 @@ import plotly_express as px
 # KPI 5 - Andelen vaccinerade med en / två doser per kommun och vecka från 2020-v53
 # till 2021-v44 plottad med ett rörligt diagram i Plotly Express.
 
+#NOTERA, DU MÅSTE VARA INNE DIREKT I LABB1 i VS FÖR ATT KODEN SKA FUNGERA!
+
 
 
 
