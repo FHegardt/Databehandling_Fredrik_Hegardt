@@ -82,7 +82,11 @@ def update_graph(json_df, stock, ohlc):
 )
 
 def highest_lowest_value(json_df,ohlc):
-    pass
+
+    dff = pd.read_json(json_df)
+    highest_value = f"High {dff[ohlc].max():.1f}"
+    lowest_value = f"High {dff[ohlc].min():.1f}"
+    return highest_value, lowest_value
 
 if __name__ == "__main__":
     app.run_server(debug=True)
