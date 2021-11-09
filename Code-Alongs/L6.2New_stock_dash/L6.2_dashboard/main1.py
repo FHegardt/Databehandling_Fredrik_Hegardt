@@ -30,22 +30,26 @@ app.layout = html.Div([
     dcc.Dropdown(id='stock-picker-dropdown', className='',options = stock_options_dropdown,
     value = 'AAPL'
     ),
+    html.P(id = "highest value"),
+    html.P(id = "lowest value"),
     dcc.RadioItems(id='ohlc-radio', className='',
         options=ohlc_options,
         value='close'
     ),
     dcc.Graph(id='stock-graph', className = ''),
     dcc.Slider(id='time-slider', className = '',
-    min = 0, max = 6, step = None, value = 2, marks = slider_marks)
+    min = 0, max = 6, step = None, value = 2, marks = slider_marks),
+    dcc.Store(id = "filtered-df")
     ])
 
-@app.callback(
-    Output("stock-graph","figure"),
-    Input("stock-picker-dropdown", "value"),
-    Input("time-slider", "value"),
-    Input("ohlc-radio", "value")
-)
-def update_graph(stock, time_index, ohlc):
+@app.callback(Output("filtered-df", "data"),
+            Input("stock-picker-dropdown", "value"),
+            Input("time-slider","value"))
+def filter_df(stock, time_index):
+    """Filters the dataframe, stores intermediary for callbacks
+    Returns:
+    json object of filtered dataframe"""
+    pass
 
     dff_daily , dff_intraday = df_dict[stock]
 
@@ -55,10 +59,30 @@ def update_graph(stock, time_index, ohlc):
     days = {i: day for i, day in enumerate([1,7,30,90,365,365*5,])}
     dff = dff if time_index == 6 else filtertime(dff,days[time_index])
 
-    fig = px.line(dff, x = dff.index, y = ohlc)
+    return dff.to_json()
+
+
+@app.callback(
+    Output("stock-graph","figure"),
+    Input("filtered-df", "data"),
+    Input("stock-picker-dropdown", "value"),
+    Input("ohlc-radio", "value")
+)
+def update_graph(json_df, stock, ohlc):
+
+    dff = pd.read_json(json_df)
+    fig = px.line(dff, x = dff.index, y = ohlc, title = "Hello")
 
     return fig #fig object goes into output property i.e figure property
+@app.callback(
+    Output("highest-value","children"),
+    Output("lowest-value","children"),
+    Input("filtered-df", "data"),
+    Input("ohlc-radio","value")
+)
 
+def highest_lowest_value(json_df,ohlc):
+    pass
 
 if __name__ == "__main__":
     app.run_server(debug=True)
