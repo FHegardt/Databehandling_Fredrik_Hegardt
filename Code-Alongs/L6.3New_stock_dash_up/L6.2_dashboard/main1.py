@@ -7,6 +7,7 @@ from load_data1 import Stockdatalocal
 from dash.dependencies import Output, Input
 import plotly_express as px
 from time_filtering import filtertime
+import dash_bootstrap_components as dbc
 
 stock_data_object = Stockdatalocal()
 
@@ -22,9 +23,20 @@ ohlc_options = [{"label": option.capitalize , "value": option}
                 for option in ["open", "high", "low", "close"]]
 
 slider_marks = {i : mark for i,mark in enumerate(["1 day", "1 week", "1 month", "3 month", "1 year", "5 year", "Max"])}
-app = dash.Dash(__name__)
 
-app.layout = html.Div([
+stylesheets = [dbc.themes.MATERIA]
+app = dash.Dash(__name__, external_stylesheets= stylesheets)
+
+app.layout = dbc.Container([
+
+    dbc.Card([
+        dbc.CardBody(html.H1("Stocky dashboard", className = "text-primary m-3"))
+    ]),
+    dbc.Row([
+        dbc.Col(html.P("Choose a stock")),
+        dbc.Col()
+    ]),
+
     html.H1("Stocks viewer"),
     html.P("Choose a stock"),
     dcc.Dropdown(id='stock-picker-dropdown', className='',options = stock_options_dropdown,
