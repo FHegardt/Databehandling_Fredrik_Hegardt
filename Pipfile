@@ -15,6 +15,7 @@ nbformat = "*"
 lxml = "*"
 requests = "*"
 python-dotenv = "*"
+numexpr = "*"
 
 [dev-packages]
 ipykernel = "*"
